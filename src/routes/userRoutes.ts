@@ -6,8 +6,8 @@ export async function userRoutes(
 ) {
   httpServer.route({
     method: "POST",
-    url: "/test",
-    handler: (req, rep) => {},
+    url: "/register",
+    handler: controller,
   });
 }
 
