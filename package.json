@@ -1,0 +1,20 @@
+{
+  "name": "socialapp",
+  "module": "index.ts",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "bun --sql-preconnect ./src/index.ts",
+    "dev": "bun --hot --sql-preconnect ./src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "latest"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "dependencies": {
+    "@fastify/cors": "^11.2.0",
+    "fastify": "^5.8.4"
+  }
+}
