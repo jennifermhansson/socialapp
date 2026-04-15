@@ -2,6 +2,7 @@ import type { FastifyReply, FastifyRequest } from "fastify";
 import type { LoginRequest, RegisterRequest } from "../types/http";
 import repository from "../repository";
 import type { TokenPayload } from "../types/auth";
+import { ADMIN_ROLE } from "../utils/constants";
 
 /*
 Vad är ansvarsområdeet för controllers?
@@ -30,7 +31,10 @@ export async function login(
   const tokenPayload: TokenPayload = {
     username: foundUser.username,
     email: foundUser.email,
+    role: ADMIN_ROLE,
   };
+
+  request.user; // decoded token
 
   const token = await reply.jwtSign(tokenPayload, {
     expiresIn: "100y",

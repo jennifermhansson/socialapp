@@ -2,7 +2,7 @@ import type { FastifyInstance, FastifyPluginOptions } from "fastify";
 import * as userControllers from "../controllers/userControllers";
 import { registerSchema } from "../schemas/registerUser";
 import { loginSchema } from "../schemas/loginUser";
-import authenticate from "../auth";
+import authenticate from "../auth/authenticate";
 
 /*
 

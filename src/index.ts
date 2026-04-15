@@ -1,7 +1,7 @@
 import fastify from "fastify";
 import banner from "./banner";
 import userRoutes from "./routes/userRoutes";
-import fastifyJwt from "@fastify/jwt";
+import auth from "./auth";
 
 const httpServer = fastify({});
 
@@ -23,9 +23,7 @@ httpServer.setErrorHandler((err: any, req, rep) => {
 async function start() {
   await httpServer.register(userRoutes);
 
-  await httpServer.register(fastifyJwt, {
-    secret: "hej",
-  });
+  await httpServer.register(auth);
 
   await httpServer.listen({ host, port });
 
