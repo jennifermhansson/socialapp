@@ -14,10 +14,10 @@ export type UserRow = {
 };
 
 export type PostRow = {
-  id: number;
-  status: "active" | "hidden" | "deleted";
-  user_id: number;
+  id: number; // automatiskt
+  status: "active" | "hidden" | "deleted"; // hårdkodar vi till active
+  user_id: number; // hämtar vi genom username med SQL
   image: string;
   caption: string | null;
-  created_at: Date;
+  created_at: Date; // sätter vi i koden (new Date().toISOString())
 };
