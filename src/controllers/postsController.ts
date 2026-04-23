@@ -57,3 +57,5 @@ export async function getFeed(request: FastifyRequest, reply: FastifyReply) {
 
   return reply.status(200).send(feed);
 }
+
+// http://10.100.2.55:3000

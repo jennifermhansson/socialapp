@@ -1,11 +1,12 @@
 import fastify from "fastify";
+import fastifyCors from "@fastify/cors";
 import banner from "./banner";
 import userRoutes from "./routes/userRoutes";
 import auth from "./auth";
 import fastifyMultipart from "@fastify/multipart";
 import postRoutes from "./routes/postRoutes";
 
-const httpServer = fastify({});
+const httpServer = fastify({ logger: true });
 
 const port = Number(process.env.PORT) || 3000;
 const host = "0.0.0.0";
@@ -27,6 +28,8 @@ httpServer.setErrorHandler((err: any, req, rep) => {
 // Vi har nu tillsatt en error handler
 
 async function start() {
+  await httpServer.register(fastifyCors, { origin: true });
+
   await httpServer.register(auth);
 
   await httpServer.register(fastifyMultipart, {
