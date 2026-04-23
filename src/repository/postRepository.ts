@@ -1,5 +1,5 @@
 import { db } from "../db/client";
-import type { PostRow } from "../types/db";
+import type { FeedRow, PostRow } from "../types/db";
 
 export async function insertOne(
   caption: string = "",
@@ -19,14 +19,12 @@ export async function insertOne(
 }
 
 // TODO: Add pagination. Currently this will only return the first 25 posts only.
-export async function getFeedForUser(username: string): Promise<PostRow[]> {
+export async function getFeedForUser(username: string): Promise<FeedRow[]> {
   // Hämta inlägg från användare som den aktuella användaren följer.
-
   const feed = await db`WITH my_user_id AS (SELECT id
                     FROM users
                     WHERE username = ${username})
 SELECT p.id,
-       p.status,
        p.image,
        p.caption,
        p.created_at,

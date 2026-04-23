@@ -12,6 +12,13 @@ async function postRoutes(
     handler: postsController.createPost,
     preHandler: [authenticate],
   });
+
+  httpServer.route({
+    method: "GET",
+    url: "/feed",
+    handler: postsController.createPost,
+    preHandler: [authenticate],
+  });
 }
 
 export default postRoutes;

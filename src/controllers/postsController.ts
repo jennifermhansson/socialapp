@@ -38,7 +38,7 @@ export async function createPost(
     return reply.status(500).send({ message: "Failed to upload image" });
   }
 
-  const caption = multipartData.fields?.caption?.value as string | undefined;
+  const caption = multipartData.fields?.caption?.value;
 
   const createdPost = await repository.posts.insertOne(
     caption,
@@ -49,12 +49,11 @@ export async function createPost(
   return reply.status(201).send(createdPost);
 }
 
-/*
+export async function getFeed(request: FastifyRequest, reply: FastifyReply) {
+  // Plocka ut den inloggade användarens username från JWT:n (finns i request.user)
+  const username = request.user.username;
 
-Att göra:
+  const feed = await repository.posts.getFeedForUser(username);
 
-Slutför kopplingen mellan createPost och Amazon S3.
-
-Så att man kan anropa POST /create och ladda upp en bild och spara länken i databasen. 
-
-*/
+  return reply.status(200).send(feed);
+}
