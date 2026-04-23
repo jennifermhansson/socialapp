@@ -51,7 +51,3 @@ CREATE TABLE IF NOT EXISTS reactions (
                            PRIMARY KEY (user_id, post_id)
 );
 
-
---- Återställer auto-increment (vid användning av SERIAL) ifall den hamnat
---- i osynk pga manuell insert. 
-select setval(pg_get_serial_sequence('books', 'id'), coalesce(max(id) + 1, 1), false) from books;

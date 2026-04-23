@@ -1,0 +1,44 @@
+version: "3.8"
+
+services:
+  db:
+    image: postgres:17
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: socialapp
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./src/db/schema.sql:/docker-entrypoint-initdb.d/schema.sql
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres -d socialapp" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgresql://postgres:postgres@db:5432/socialapp
+      JWT_SECRET_KEY: hej
+      S3_REGION: eu-north-1
+      S3_BUCKET: fos25-socialapp
+      S3_ACCESS_KEY: 123
+      S3_SECRET_KEY: 123
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - .:/backend
+
+networks:
+  socialapp-network:
+    driver: bridge
+
+volumes:
+  postgres_data:
